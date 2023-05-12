@@ -1,0 +1,206 @@
+\section{Week 05}
+
+\subsection{Perspective}
+\par{In the real world, we encounter various stimuli\footnote{I started writing a quick introduction about why we care about category theory. This turned into a longer text that you may skip}.
+Your houseplant sprouts, vanilla ice cream tastes good, you count 15 rabbits in your local forest, you can't find matching socks, Mike from Work added you on Instagram, your houseplant dies, strawberry ice cream is not your thing, you count 60 rabbits in your local forst, you count 10 foxes in your local forest, you see 10 socks and need to pair them, Mike is friends with a college friend of yours \ldots}
+
+\par{To make sense of them, we collect related things together and form sets.
+\begin{itemize}
+  \item $\{$houseplant sprouts, houseplant is dead, houseplant is young, houseplant is old$\}$
+  \item $\{$vanilla ice cream, strawberry ice cream, chocolate ice cream$\}$
+  \item $\{$there are 15 rabbits, there are 60 rabbits, there are 10 foxes, there are 30 foxes, there are 12 rabbits$\}$
+  \item $\{$Your college friend Adam, Mike, You, Your Fiancé{(e)}$\}$
+  \item $\{$Switching sock Nr. 2 with Sock Nr. 5 creates a pair of socks at positions 1 and 2, \ldots$\}$
+\end{itemize}
+We then try to figure out how these relate.}
+
+\par{You draw the semi-group diagram of a plant stages, you draw the Hasse diagram of the Poset of your ice cream flavours preferences, you figure out the equations of the dynamical system of rabbit and fox populations, you draw the friend network of you and the people you know. You compute the permutation group of $10$ socks.}
+
+\par{As your collection of stimuli grows, you see patterns emerging: Once a plant dies, it never comes back to life, the brighter the ice cream flavour, the better it is, the rabbit-fox populations behave like the zebra-lion populations do. All the people you met since 2020 somehow know Mike.}
+
+\par{These patterns can be understood via \emph{morphisms}: Semi-group morphisms, poset morphisms, dynamic system morphisms, graph morphisms}
+
+\vspace{1\baselineskip} 
+
+Mathematicians are like people, but instead of the real world, their stimuli come from algebraic objects.
+A mathematician sees the natural numbers $\N$, invertible matrices $\GL(n,\C)$, the exponential map, the poset $\{\bot,\top\}$, a complete bipartite graph $K_{n,m}$.
+
+They collect similar things together
+\begin{itemize}
+  \item The natural numbers, morse code
+  \item The permutation group of $10$ objects, invertible $n \times n$ matrices, real numbers, \ldots
+  \item $\R^{3}$, Smooth functions on an interval, homogenous polynomials of degree $3$, \ldots
+  \item $\{\bot,\top\}$,  $(\Z,\leq)$, \ldots
+  \item A complete bipartitle graph $K_{n,m}$, the train network of Switzerland\footnote{Apparently, we still haven't figured that out yet.}, \ldots
+\end{itemize}
+and try to understand them better by studying how certain groups relate with each other, how vector spaces releate to each other, etc. These facts can then be expressed via equations, or other theorems.
+
+Now we ask, what do all these collections have in common? \textbf{The answer is that they form categories.}
+Now, a category theorist will then see patterns in the mathematics and will express them with terminology that we will see in the future weeks or in the ACT4E-II course.
+
+
+\subsection{(Semi)-Categories}
+To state that something forms a (semi)-category $\textsf{C}$, one has to do the following things:
+\begin{enumerate}
+  \item State what the objects $\textsf{Ob}_{\textsf{C}}$ are.
+  \item Given two objects, $X,Y$ state what the morphisms in $\Hom_{\textsf{C}}(X;Y)$ are.
+  \item Given two (composable) morphisms $X \stackrel{f}{\to} Y, Y \stackrel{g}{\to}Z$, state what their composition $f;g$ is. (\textbf{This includes showing that their composition is again a valid morphism})
+  \item Prove associativity of composition.
+  \item Additionally, if $\textsf{C}$ is supposed to be a category (instead of a semi-category), we have to state what the identity morphism of an object $X$ is.
+    Then, we also need to prove that the identity morphism respects the identity rule of composition.
+\end{enumerate}
+As an exercise, we will follow the steps above.
+Let $\mathcal{G} = (V,E,\text{src},\text{tgt})$ be a (directed) graph. 
+Show that the free category on $\mathcal{G}$ is a valid category.
+This will contain the tipps for the two exercises \texttt{HowManyMorphisms} and \texttt{CategorySemigroups}.
+
+\subsubsection{\texttt{HowManyMorphisms}}
+See below where we explain how the category $\textsf{Cat}(\mathcal{G})$ is defined.
+
+\subsubsection{\texttt{CategorySemigroups}}
+In this exercise, you are tasked to follow the steps, but for semigroups. See below to get an idea of what you need to do.
+
+
+\subsubsection{Free Category on $\mathcal{G}$}
+Let $\mathcal{G} = (V,E,\text{src},\text{tgt})$ be a (directed) graph. 
+
+We define our category $\textsf{C} = \textsf{Cat}(\mathcal{G})$ as follows:
+\begin{enumerate}
+  \item The objects of $\textsf{C}$ are the elements of $V$.
+  \item Given two objects $v,w \in \textsf{Ob}_{\textsf{C}}$, let $\Hom_{\textsf{C}}(v;w)$ be the collection of paths starting at $v$ and ending at $w$:
+    \begin{align*}
+      \Hom_{\textsf{C}}(v;w)
+      :=
+      &\left\{
+        [e_1,\ldots,e_n]
+        \left\vert
+        \begin{array}{l}
+        e_i \in E \text{ for $i = 1,\ldots,n$}
+        \land
+        n \in \{1,2,\ldots\}
+        \land
+        \text{src}(e_1) = v 
+        \land \text{tgt}(e_n) = w
+        \\
+        \land
+        \text{tgt}(e_{i}) = \text{src}(e_{i+1}) \text{ for $i = 1,\ldots, n-1$}
+        \end{array} 
+        \right.
+      \right\}
+      \\
+      \cup{}
+      &\left\{
+        \texttt{[]} \big\vert{} \text{\ if } v = w
+      \right\}
+    \end{align*}
+  \item Let $u,v,w \in \textsf{Ob}_{\textsf{C}}$ and assume first that $u \neq v$ and $v \neq w$.
+    Let $e = [e_1,\ldots,e_n] \in \Hom_{\textsf{C}}(u;v)$ and $f = [1,\ldots,f_m] \in \Hom_{\textsf{C}}(v;w)$.
+    We define the path $e;f \in \Hom_{\textsf{C}}(u;w)$ via
+    \begin{align*}
+      e;f = [{(e;f)}_1,\ldots,{(e;f)}_{n+m}]
+      \quad \text{where} \quad 
+      {(e;f)}_k = \left\{\begin{array}{ll}
+        e_k & \text{ if } k \leq n\\
+        f_{k-n}& \text{ if } k > n
+      \end{array} \right.
+    \end{align*}
+
+    Now if $u = v$ (and similarly, if $v = w$), we have to dfine how the empty path composes. For this, we just let
+    \begin{align}
+      \texttt{[]};f := f \in \Hom_{\textsf{C}}(v,w) = \Hom_{\textsf{C}}(u,w)\label{eq:id-left}
+      \\
+      e;\texttt{[]} := e \in \Hom_{\textsf{C}}(u,v) = \Hom_{\textsf{C}}(u,w) \label{eq:id-right}
+    \end{align}
+
+    We now need to check\footnote{We only did the first part in class. If you need it written down, please write me an email.} that:
+    \begin{itemize}
+      \item ${(e;f)}_i \in E$ for $i = 1,\ldots, n+m$
+      \item $\text{src}({(e;f)}_1) = u$
+      \item $\text{tgt}({(e;f)}_{n+m}) = w$
+    \end{itemize}
+
+  \item To prove associativity of composition, let $u,v,w,x \in \textsf{Ob}_{\textsf{C}}$ and $e = [e_1,\ldots,e_n] \in \Hom_{\textsf{C}}(u;v),f = [f_1,\ldots,f_m]\in \Hom_{\textsf{C}}(v;w),g = [g_1,\ldots,g_\ell] \in \Hom_{\textsf{C}}(w;x)$.
+    For sake of brevity, we will only look at the case where $u \neq v, v \neq w$ and $w \neq x$.
+
+    Then by definition of composition:
+    \begin{align*}
+      {(e;(f;g))}_k
+      =
+      &\left\{\begin{array}{ll}
+          e_k & \text{if } k \leq n \\
+        {(f;g)}_{k-n} & \text{if } k > n
+      \end{array} \right.
+      \\
+      =
+      &\left\{\begin{array}{ll}
+          e_k & \text{if } k \leq n \\
+          f_{k-n} & \text{if } k > n \land (k-n) \leq m \\
+          g_{k-n - m} & \text{if} k > n \land (k-n) > m
+      \end{array} \right.
+    \end{align*}
+    Similarly, we have
+    \begin{align*}
+      {((e;f);g)}_k
+      =
+      &\left\{\begin{array}{ll}
+        {(e;f)}_k & \text{if } k \leq n+m\\
+        g_{k-(n+m)} & \text{if }k > n+m
+      \end{array} \right.
+      \\
+      =
+      &\left\{\begin{array}{ll}
+        e_k & \text{if }k \leq n + m \land k \leq n\\
+        f_{k-n} & \text{if }k \leq n+m \land k > n\\
+        g_{k-n-m} & \text{if } k> n+m
+      \end{array} \right.
+    \end{align*}
+    so they are the same
+  \item For $u \in \textsf{Ob}_{\textsf{C}}$, we define its identity morphism as $\id_u := [] \in \Hom_{\textsf{C}}(u;u)$.
+    By Equations~\eqref{eq:id-left},\eqref{eq:id-right}, it preserves morphisms under composition.
+\end{enumerate}
+
+\subsection{Isomorphisms}
+By definition, an \textbf{isomorphism} in a category $\textsf{C}$ is a morphism $f \in \Hom_{\textsf{C}}(X;Y)$ such that there exists a morphism $g \in \Hom_{\textsf{C}}(Y;X)$ such that
+\begin{align*}
+  f;g = \id_X
+  \quad \text{and} \quad 
+  g;f = \id_Y
+\end{align*}
+
+In the popular Jazz standard song, ``Everybody loves my Baby'', the singer says
+\begin{center}
+  ``Everybody Loves My Baby, but My Baby Don't Love Nobody but Me.''
+\end{center}
+Consider the directed graph $\mathcal{G}$, where the vertices are people, and an edge $e$ connectes $X$ to $Y$ if $X$ loves $Y$.
+
+Let $\textsf{C} = \textsf{Cat}(\mathcal{G})$, be the free category generated by $\mathcal{G}$.
+Show that in $\textsf{C}$, ``Me'' and the ``baby'' are isomorphic.
+
+\textbf{Solution:}
+Since everybody loves the baby, there exists a morphism $f: \texttt{Me} \to \texttt{Baby}$.
+Moreover, the baby loves me, so there exists a morphism $g: \texttt{Baby} \to \texttt{Me}$.
+As \emph{everybody} loves the baby, including the baby itself, let $\id_{\texttt{Baby}}$ denote the identity morphism.
+But the baby loves \emph{nobody} but me, so it can love at most 1 person. It follows $g = \id_{\texttt{Baby}}$.
+So in fact, \texttt{Me} and the \texttt{Baby} are the same person.
+Since everything that holds about the baby also holds about \texttt{Me}, \texttt{Me} can also love at most 1 person, so it follows $f = \id_{\texttt{Me}}$.
+It follows
+\begin{align*}
+  f;g = \id_{\texttt{Me}} ; \id_\texttt{Baby} = \id_{\texttt{Me}}
+  \quad \text{and} \quad 
+  g;f = \id_{\texttt{Baby}} ; \id_\texttt{Me} = \id_{\texttt{Baby}}
+\end{align*}
+
+
+\subsubsection{\texttt{IsosInRel}}
+You may want to look at the proof of the related fact about functions. It is found on Page 95 (pdf page 105/637, just after Section 5.15) in the latest ACT4E book version on moodle.
+The proof is similar, but you need to be a bit careful distinguishing functions and relations.
+
+
+
+
+
+
+
+
+
+

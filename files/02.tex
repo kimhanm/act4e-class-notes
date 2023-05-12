@@ -1,0 +1,264 @@
+\section{Week 02}
+
+\subsection{Theory Section}
+As a warm-up, consider the set
+\begin{align*}
+  X  = \left\{
+    \{\}, \{\{\}\}, \{\{\},\{\{\}\}\}
+  \right\}
+\end{align*}
+Write down the elements of its power-set $\mathcal{P}(X)$\footnote{\textbf{Solution:} $\mathcal{P}(X) = \big\{\emptyset,\{\emptyset\},\{\{\emptyset\}\},\{\{\emptyset,\{\emptyset\}\}\}, \{\emptyset,\{\emptyset\}\}, \{\emptyset,\{\emptyset,\{\emptyset\}\}\},\{\{\emptyset\},\{\emptyset,\{\emptyset\}\}\},X\big\}$}. You may want to write $\emptyset$ instead of $\{\}$ for ease of notation.
+
+In the lectures, you have already seen a bunch of mathematical objects. Let's review them and find some examples and just as importantly, \emph{non-examples}.
+
+\subsubsection{Magmas}
+A \textbf{Magma} is a set $M$ together with a function $\texttt{;}: M \times M \to M$.
+\begin{enumerate}
+  \item $\R$ with the map
+    \begin{align*}
+      \texttt{;}: \R \times \R 
+      &\to \R
+      \\
+      (x,y)
+      &\mapsto
+      5x + y^{2} - 2y + 7
+    \end{align*}
+    is a magma. In fact, we can replace it with any other real-valued function you can imagine.
+  \item The mapping $(x,y) \mapsto x \geq y$ for $x,y \in \R$ does not define a magma, since the domain is $\R \times \R$, but its codomain is $\{\texttt{true},\texttt{false}\}$.
+  \item The set
+    \begin{align*}
+      M = \left\{\begin{pmatrix}
+      x\\
+      y
+      \end{pmatrix}\in \R^{2} \bigg\vert x \cdot y \geq 0\right\}
+    \end{align*}
+    with vector addition does not define a magma, because
+    \begin{align*}
+      \vec{u} = \begin{pmatrix}
+      0\\
+      -1
+      \end{pmatrix}
+      ,
+      \vec{v} = \begin{pmatrix}
+      1\\
+      0
+      \end{pmatrix}
+      \quad
+      \implies \vec{u} + \vec{v} = \begin{pmatrix}
+      1\\
+      -1
+      \end{pmatrix}
+      \notin M
+    \end{align*}
+    \textbf{Always check that the function \texttt{;} produces an element of $M$!}\footnote{If that is not the case, one says that the function is not \emph{well-defined}.}
+\end{enumerate}
+
+\subsection{Semi-Groups}
+A \textbf{semi-group} is a set $S$ together with a function $\texttt{;}: S \times S \to S$ such that for all $x,y,z \in S$, it holds
+\begin{align*}
+  \text{(Associativity)} \qquad
+  x \texttt{;} (y \texttt{;}z) = (x \texttt{;}y) \texttt{;}z
+\end{align*}
+
+\begin{enumerate}
+  \item $\R$ with $x\texttt{;}y := x + y - 7$ is a semi-group, because for any $x,y,z \in \R$:
+    \begin{align*}
+      x \texttt{;} (y \texttt{;}z)
+      =
+      x \texttt{;} (y + z - 7)
+      =
+      x + y + z - 7 - 7
+      = x + y + z - 14
+    \end{align*}
+    and
+    \begin{align*}
+      (x \texttt{;} y) \texttt{;}z
+      =
+      (x + y - 7) \texttt{;}z
+      =
+      (x + y - 7) + z - 7
+      = x + y + z - 14
+    \end{align*}
+  \item $\R$ with $x \texttt{;}y := 2x + y$ is \emph{not} a semi-group.
+\end{enumerate}
+Every Semi-group is a magma.
+
+\subsection{Monoids}
+A \textbf{monoid} is a set $M$ with a function $\texttt{;}: M \times M \to M$ such that 
+\begin{itemize}
+  \item for all $x,y,z \in M$, it holds
+    \begin{align*}
+      \text{(Associativity)} \qquad
+      x \texttt{;} (y \texttt{;}z) = (x \texttt{;}y) \texttt{;}z
+    \end{align*}
+  \item there exists an element $e \in M$ such that for all $x \in M, e \texttt{;}x = x \texttt{;}e = x$.
+\end{itemize}
+
+\begin{enumerate}
+  \item $\{\texttt{true},\texttt{false}\}$ with $\lor$ (logical OR) is a monoid.
+  \item $\{\texttt{true},\texttt{false}\}$ with $\land$ (logical AND) is a monoid.
+  \item $\R$ with $x \texttt{;}y := x + y - 7$ is not a monoid.
+\end{enumerate}
+Every monoid is a semi-group.
+
+
+
+\subsection{Generalities}
+
+Most of the theory exercises have very short solutions. That doesn't mean that you should necessarily be able to solve them very quickly.
+
+For the first few weeks, the biggest difficulty lies in understanding what exactly is expected of you.
+In case you are stuck for a subproblem for longer than 10 minutes, here is is a short check-list to make the most of your time:
+\begin{itemize}
+  \item Mark all mathematical terms (e.g. \emph{relation}, \emph{function}, \emph{transpose}, \emph{composition}, etc.) that are used.
+    Check that you understand their definitions\footnote{\textbf{Warning:} Mathematicians are really good at giving the same name to different things (and different names to the same thing). If something feels fishy, check that the words are used in the correct context.}.
+
+  \item If there are any \emph{Symbols}, check what \emph{kind} that symbol is. Is it an element? A function? A group?
+    Is the symbol a free variable or is it already defined somewhere else? 
+  \item Take a quick break. Getting your mind free from a problem and coming back a bit later can save you a good amount of time and headaches.
+\end{itemize}
+
+\subsection{Exercise Sheet Discussion}
+
+
+\subsubsection{\texttt{DistributingSubsets} [4 Points]}
+
+Recall the definition of equality of sets. Two sets $L,R$ are \emph{equal}, if $L \subseteq R$ and $L \supseteq R$.
+
+We show one inclusion.
+
+\textbf{$\bm{L \subseteq R}$:} 
+Let~$x \in S \cap (T \cap U)$.
+This means~$x \in S$ and that~$x \in T$ or~$x \in U$ (or both).
+If~$x \in T$, then~$x \in S \cap T$, so $x \in R$.
+if~$x \in U$, then~$x \in S \cap U$, and $x \in R$.
+
+Since in either case, we have $x \in R$, we conclude $x \in L \implies x \in R$.
+
+
+
+%\begin{sol}
+%  To prove that the left-hand side $L := S \cap (T \cup U)$ and the right-hand side $R := (S \cap T) \cup (S \cap U)$ are \emph{equal}, we show both inclusions $L \subseteq R$ and $L \supseteq R$.
+%
+%  \textbf{$\bm{L \subseteq R}$:} Let $x \in L$.
+%
+%  %\begin{align*}
+%  %  \prftree[r]{$\cap$-I}{
+%  %  \prftree[r]{$\cap$-E}{
+%  %    x \in S \cap (T \cup U)
+%  %  }{
+%  %    \prftree[r]{$\cup$-E}{
+%  %      x \in S \text{\ and } x \in (T \cup U)
+%  %    }{
+%  %      \prftree[r]{$\cap$-I}{
+%  %        x \in S \text{\ and } x\in T
+%  %      }{
+%  %        x \in S \cap T
+%  %      }
+%  %      \ 
+%  %      \begin{matrix}
+%  %        \text{or}
+%  %      \\
+%  %        \phantom{\text{or}}
+%  %      \end{matrix}
+%  %      \ 
+%  %      \prftree[r]{$\cup$-I}{
+%  %        x \in S \text{\ and }x \in U
+%  %      }{
+%  %        x \in S \cap U
+%  %      }
+%  %    }
+%  %  }
+%  %  }{
+%  %    x \in (S \cap T) \cup (S \cap U)
+%  %  }
+%  %\end{align*}
+%  %so $x \in R$.
+%
+%
+%  \textbf{$\bm{L \supseteq R}$:} 
+%  Let $x \in R$. We can read the proof tree in reverse order to find that $x \in L$.
+%\end{sol}
+
+
+\subsubsection{\texttt{ComposingRelations} [6 Points]}
+Make sure you understand the definition of relation composition. Given relations $R: A \to B$, $T: B \to C$, we have
+\begin{align*}
+  R \texttt{;}T := \left\{
+    (x,z) \in A \times C \big\vert
+    \exists y \in B\colon\ xRy \land yTz
+  \right\}
+\end{align*}
+You will need to check that any solutions you find satisfy $x \in A, y \in B, z \in C$.
+
+
+%\subsection{\texttt{Rel3Functions} [6 Points]}
+%
+%Consider the simple example $A = \{x\}, B = \{y,z\}$ with the relation $x R z$.
+%\begin{enumerate}
+%  \item Recall that the product of sets $A \times B$ consists of tuples $\scal{a,b}$ with $a \in A$ and $b \in B$. So in the simple example given, we have
+%    \begin{align*}
+%      A \times B = \{\scal{x,y}, \scal{x,z}\}
+%    \end{align*}
+%    When viewing the relation as a function $\phi_R: A \times B \to \{\bot,\top\}$, we have
+%    \begin{align}
+%      \phi_R(\scal{x,y}) = \bot, \quad \text{and} \quad \phi_R(\scal{x,z}) = \top
+%    \end{align}
+%    which reads as ``$x$ does not relate to $y$ and $x$ does relate to $z$''.
+%
+%    For the exercise, write out the set $A \times B$ (which should have $3 \cdot 4 = 12$ elements) and evaluate
+%    $\phi_R(x_1,y_1), \ldots \phi_R(x_1,y_4), \phi_R(x_2,y_1)$ etc. as in equation (1).
+%  \item Recall that the powerset of a set $B$ consists of subsets $S \subseteq B$.
+%    So for $B = \{y,z\}$, he have
+%    \begin{align*}
+%      \text{Pow}(B) = \{\emptyset,\{y\},\{z\},\{y,z\}\}
+%    \end{align*}
+%
+%    When viewed as a function $\hat{\phi}_R: A \to \text{Pow}(B)$, we have to define what $\hat{\phi}_R(x) \in \text{Pow}(B)$.
+%    \begin{align}
+%      \hat{\phi}_R(x) = \{z\}
+%    \end{align}
+%    which reads as: ``The set of things in $B$, to which $x$ relates to is $\{z\}$''  
+%    For the exercise, you need to define three subsets of $B$, namely $\hat{\phi}_R(x_1), \hat{\phi}_R(x_2), \hat{\phi}_R(x_3)$.
+%
+%  \item In the simple example, $\text{Pow}(A) = \{\emptyset,\{x\}\}$.
+%    Viewing the relation as a function $\check{\phi}_R: B \to \text{Pow}(A)$, we have
+%    \begin{align}
+%      \check{\phi}_R(y) = \emptyset,
+%      \quad \text{and} \quad 
+%      \check{\phi}_R(z) = \{x\}
+%    \end{align}
+%    which can be read as ``Of the elements in $A$, nothing relates to $y \in B$ and $x$ relates to $z$''
+%
+%    Write out the set $\text{Pow}(A)$ (which has $2^{3} = 8$ elements) and determine $\check{\phi}_R(y_1), \check{\phi}_R(y_2), \check{\phi}_R(y_3)$ and $\check{\phi}_R(y_4)$.
+%\end{enumerate}
+%
+%\textbf{Bonus Question:} You might have seen the hat and inverted hat symbols $\hat{\phi}, \check{\phi}$ used for other things, such as fourier transforms. 
+%Try to find (simple) similarities between the things in this exercise and what you know about fourier transforms.
+%
+
+\subsubsection{\texttt{RelProperties} [10 Points]}
+Let's go through the first part of property 4, which stats that a relation $R: A \to B$ is everywhere defined, if $\id_A \subseteq R \texttt{;}R^{T}$.
+You will have to prove the ``and only if'' part yourself.
+
+Let $R: A \to B$ be a relation such that $\id_A \subseteq R \texttt{;}R^{T}$. 
+\begin{align*}
+  \text{$\id_A$ is reflexive}
+  \implies\ &\forall x\in A:\ x\id_A x
+  \\
+  (\text{$\id_A \subseteq R \texttt{;}R^{T}$}) \quad
+  \implies\ &\forall x \in A:\ x (R \texttt{;}R^{T}) x
+  \\
+  (\text{definition of \texttt{;}}) \quad
+  \implies\ &\forall x \in A:\ \exists y \in B: xRy \land yR^{T}x
+  \\
+  (\text{weakening of~$\land$})\quad
+  \implies\ &\forall x \in A:\ \exists y \in B: xRy 
+  \\
+  (\text{definition of everywhere defined})\quad
+  \implies\ &\text{$R$ is everyhwere defined}
+\end{align*}
+
+\textbf{Bonus Question:} You know the word \emph{transpose} from Linear Algebra.
+Can you find analogous identities to property 4 and 5?
+

@@ -1,0 +1,225 @@
+\section{Week 07}
+
+The things we did so far can be summarized as follows:
+\begin{itemize}
+  \item A collection of things can be viewed as a set.
+  \item The things sometimes relate to each other. 
+    \begin{itemize}
+      \item Sometimes they form a poset with a relation $\leq$
+      \item Sometimes they form a semigroup with composition \texttt{;}
+      \item etc.
+    \end{itemize}
+  \item The collection of objects that have the same structure (sometimes) assemble into a category.
+  \item The objects (within a category) relate to each other via morphisms.
+  \item The collection of all categories assemble into a bigger category\footnote{One has to be a bit careful because size considerations can cause logical paradoxes. For our purposes, we can safely ignore them.} $\textsf{Cat}$
+  \item Sometimes, categories relate to each other via \textbf{functors}.
+\end{itemize}
+
+
+\subsection{Functors}
+Let $\textsf{C},\textsf{D}$ be categories. A \textbf{functor} $F: \textsf{C} \to \textsf{D}$ has as \textbf{constituents}:
+\begin{itemize}
+  \item for every object $X$ in $\textsf{C}$, $F$ picks out an object $F(X)$ in $\textsf{D}$
+  \item for every morphism $f \in \Hom_{\textsf{C}}(X;Y)$ in $\textsf{C}$, $F$ picks out a morphism $F[f] \in \Hom_{\textsf{D}}(F(X),F(Y))$ in $\textsf{D}$.
+\end{itemize}
+subject to the \textbf{conditions:}
+\begin{itemize}
+  \item For all objects $X$ of $\textsf{C}$: $F[\id_X] = \id_{F(X)}$
+    \hfill
+    \textbf{(Identity condition)}
+  \item For any pair of morphisms $(X \stackrel{f}{\to}Y), (Y \stackrel{g}{\to}Z)$ in $\textsf{C}$: $F[f];F[g] = F[f;g]$
+    \hfill
+    \textbf{(Functoriality)}
+\end{itemize}
+
+
+\subsubsection{The $\Hom$-functor}
+In the exercise \texttt{CartProdAsFunctor}, you have to check these conditions for the product functor $F: \Set \times \Set \to \Set$.
+
+In this exercise, we check the conditions for the \textbf{Hom-functor}.
+
+Let $\textsf{C}$ be a category and $X$ any object in $\textsf{C}$.
+We want to define a functor $h^{X}$ such that on objects it acts by
+\begin{align*}
+  h^X: \textsf{C} \to \Set,
+  \quad
+  A \mapsto \Hom_{\textsf{C}}(X,A)
+\end{align*}
+Before reading ahead, try to see if you can find a suitable way to define the action of $h^{X}$ on morphisms $A \stackrel{f}{\to}B$.
+
+A natural way would be to define $h^{X}[f]$ as the map
+\begin{align*}
+  h^{X}[f]: h^{X}(A) = \Hom_{\textsf{C}}(X,A) 
+  &\to \Hom_{\textsf{C}}(X,B) = h^{X}(B)
+  \\
+  \phi
+  &\mapsto
+  h^{X}[f](\phi) = \phi;f
+\end{align*}
+\begin{align*}
+  \xymatrix{
+    X
+    \ar[r]_\phi
+    \ar@/^4ex/[rr]^{\phi;f}
+    &
+    A
+    \ar[r]_f
+    &
+    B
+  }
+\end{align*}
+It is sometimes useful to simply write $h^{X}[f] = \texttt{-};f$, where the \texttt{-} is to be read as a placeholder for morphisms $\phi: X \to A$.
+
+\textbf{Identity condition:} Let $A$ be an object of $\textsf{C}$.
+The identity condition requires that
+\begin{align*}
+  h^{X}[\id_A] \stackrel{!}{=} \id_{h^{X}(A)}
+\end{align*}
+To be the identity on $\Hom_{\textsf{C}}(X,A)$ means that for any $\phi \in \Hom_{\textsf{C}}(X,A)$:
+\begin{align*}
+  (h^{X}(\id_A))(\phi) = (-;\id_A)(\phi) = \phi;\id_A = \phi
+\end{align*}
+
+\textbf{Functoriality:} Let $(A \stackrel{f}{\to}B),(B \stackrel{g}{\to}C)$.
+In order to show that $h^{X}(f;g)$ and $h^{X}(f);h^{X}(g)$ are the same element in $\Hom_{\Set}(h^{X}(A);h^{X}(B))$, let $\phi \in h^{X}(A) = \Hom_{\textsf{C}}(X,A)$.
+Then
+\begin{align*}
+  h^{X}[f;g](\phi) = \phi;(f;g) = (\phi;f);g = h^{X}[f](\phi);g = h^{X}[g]\left(h^{X}[f](\phi)\right)
+  =
+  (h^{X}[f]; h^{X}[g])(\phi)
+\end{align*}
+As this holds for all $\phi \in h^{X}(A)$, the functoriality is satisfied.
+
+
+
+
+\subsection{Moore Machines}
+A Moore machine consists of the following data:
+\begin{itemize}
+  \item A set $X$ called the \textbf{state space}
+  \item A set $Y$ called the \textbf{output space}.
+  \item A function $\text{ro}: X \to Y$. We call $\text{ro}(x)$ the \textbf{read-out} of the system in state $x$.
+  \item A set $U$ called the \textbf{input space} of the machine.
+  \item A function $\texttt{dyn}: \scal{U,X} \to X$, which governs the \textbf{dynamics} of the system.
+    We call $\texttt{dyn}(u,x)$ the state after applying input $u$ to the state $x$.
+  \item An \textbf{initial state} $\texttt{st} \in X$
+\end{itemize}
+
+
+\subsubsection{Example: Vending Machine}
+You are tasked to design a system that controls a vending machine.
+It can take in coins (of any denomination) and can dispense various items at different price points.
+Water (cost: 1), Soda (cost: 2), Chocolate (cost: 3). 
+
+It should be able to accept coins, dispense the right items and give the change back.
+
+\textbf{Exercise:} Define a suitable moore machine to model this system\footnote{There can be many right answers}.
+\begin{itemize}
+  \item Let's start with the input space.
+    We could have an input for each coin it recieves and an input for each button on the machine, i.e. one per item and a return change button.
+    \begin{align*}
+      U = \N \cup \{\text{water},\text{soda},\text{coin},\text{return change}\}
+    \end{align*}
+  \item The machine should be able to dispense any amount of coins or an item, but it should also be able to wait (for more coins) so the output could be
+    \begin{align*}
+      Y =\N \cup \{\text{dispense water},\text{dispense soda},\text{dispense chocolate},\text{nothing}\}
+    \end{align*}
+  \item In order to keep track of the number of coins and which button is pressed, we let the state space be $X = \N \times \{\text{none}, \text{w},\text{s},\text{c},\text{r}\}$.
+  \item We define the readout as
+    \begin{align*}
+      \text{ro}(n,\text{none}) 
+      &= \text{nothing}
+      \\
+      \text{ro}(n,\text{water}) 
+      &= \text{dispense water}
+      \\
+      \text{ro}(n,\text{soda}) 
+      &= \text{dispense soda}
+      \\
+      \text{ro}(n,\text{chocolate}) 
+      &= \text{dispense chocolate}
+      \\
+      \text{ro}(n,\text{return change}) 
+      &= n
+    \end{align*}
+  \item Now for the dynamics: 
+    If you press return coins, you should set the button state:
+    \begin{align*}
+      \text{dyn}(\text{return change},(n,x)) = (n,\text{return change})
+    \end{align*}
+    The next readout will return that amount of money, so if the previous state was return change, we reset it and remove $n$: 
+    \begin{align*}
+      \text{dyn}(k,(n,\text{return change})) 
+      &= (k,\text{none})
+      \\
+      \text{dyn}(\text{button},(n,\text{return change})) 
+      &= (0,\text{none})
+      \\
+      \text{dyn}(k,(n,x)) 
+      &= (n+k,\text{none})
+    \end{align*}
+    If the button pressed was an item, we check if there is enough money, remove its cost and set the state for the readout.
+    \begin{align*}
+      \text{dyn}(\text{water},(n,\text{button})) 
+      &= 
+      \left\{\begin{array}{ll}
+          (n-1,\text{water}) & \text{if } n \geq 1\\
+          (n,\text{none}) & \text{otherwise}
+      \end{array} \right.
+      \\
+      \text{dyn}(\text{soda},(n,\text{button})) 
+      &= 
+      \left\{\begin{array}{ll}
+          (n-2,\text{soda}) & \text{if } n \geq 2\\
+          (n,\text{none}) & \text{otherwise}
+      \end{array} \right.
+      \\
+      \text{dyn}(\text{chocolate},(n,\text{button})) 
+      &= 
+      \left\{\begin{array}{ll}
+          (n-3,\text{chocolate}) & \text{if } n \geq 3\\
+          (n,\text{none}) & \text{otherwise}
+      \end{array} \right.
+    \end{align*}
+    where $\text{button}$ are placeholders for buttons.
+  \item A sensible initial state $\text{st}$ would be $(0,\text{none})$
+\end{itemize}
+Follow the state and outputs for the input stream $5,\text{chocolate},\text{water},\text{soda},3,\text{soda},\text{return change}$.
+
+\begin{align*}
+  (0,\text{none})
+  \mapsto 
+  (5,\text{none})
+  \mapsto 
+  (2,\text{chocolate})
+  \mapsto 
+  (1,\text{water})
+  \mapsto 
+  (1,\text{none})
+  \mapsto 
+  (4,\text{none})
+  \mapsto 
+  (2,\text{soda})
+  \mapsto 
+  (2, \text{return change})
+\end{align*}
+Note that at the end, the state is $(2, \text{return change})$, even if the 2 coins were dispensed already. That is not a problem because with the next input, the $2$ coins will be removed.
+with outputs
+\begin{align*}
+  \text{nothing}
+  \mapsto 
+  \text{nothing}
+  \mapsto 
+  \text{dispense chocolate}
+  \mapsto 
+  \text{dispense water}
+  \mapsto 
+  \text{nothing}
+  \mapsto 
+  \text{nothing}
+  \mapsto 
+  \text{dispense soda}
+  \mapsto 
+  \text{return 2}
+\end{align*}
+

@@ -1,0 +1,87 @@
+\section{Week 09}
+Because there was no lecture this week, we will do revisit some material today. 
+If you have any questions about some of the exercise sheets, you can ask them and I will include them in the uploaded version on moodle.
+
+\subsection{Unabstraction}
+Since the introduction of categories, we have introduced the following concepts:
+\begin{itemize}
+  \item Commutative Diagrams
+  \item Functors
+  \item Categorical Product
+  \item Opposite Category
+  \item Slice Category
+\end{itemize}
+
+Today, we will look back at some of the things we did earlier and try to see them as manifestations of the things above.
+
+For each of the following ideas, see if you can describe them using the concepts above.
+
+\begin{enumerate}
+  \item The greatest common divisor $\gcd(n,m)$ of two natural numbers $n,m$. 
+  \item The transpose $R^{T}$ of a relation $R: X \to Y$ given by $x R y \iff y R^{T}x$. It holds ${(R^{T})}^{T} = R$.
+  \item The coproduct.
+  \item The coslice category $c/\textsf{C}$
+  \item The singleton set.
+  \item The empty set.
+  \item Surjective and injective functions.
+  \item[(h$^{\ast}$)] For a real number $x \in \R$, we can define the flor $\floor{x}$ and ceiling $\ceil{x}$. For example: $\floor{\pi} = 3, \ceil{\pi} = 4$.
+    Then
+    \begin{align*}
+      n \leq 2k + 1
+      \quad \text{if and only if} \quad 
+      2 \floor{\tfrac{n}{2}} + 1 \leq 2k + 1
+      \\
+      2k \leq n
+      \quad \text{if and only if} \quad 
+      2k \leq \floor{\tfrac{n}{2}}
+    \end{align*}
+    \setcounter{enumi}{8}
+  \item The dual of a real (finite-dimensional) vector space $V^{\ast} = \Hom(V,\R)$.
+  \item The poset of intervals $[a,b] \subseteq \R$ ordered by inclusion.
+  \item The tensor product of vector spaces.
+\end{enumerate}
+
+
+\textbf{Possible Solutions:}
+\begin{enumerate}
+  \item The $\gcd$ is the categorical product. In the category, where the objects are natural numbers and
+    \begin{align*}
+      \Hom(n,m) = \{d \in \N \big\vert d \cdot n = m\}
+    \end{align*}
+    \textbf{TODO:} Show diagram
+  \item Transposition gives rise to a contravariant functor $T:\Rel \to \Rel$. The fac that ${(R^{T})}^{T} = R$ can be interpreted as the equality of functors $T;T = \id_{\Rel}$.
+  \item The coproduct is the product in the opposite category. If you are not 100\% convinced of this, go through the definition and prove it.
+  \item The coslice category is opposite category of the slice category of the opposite category
+    \begin{align*}
+      c/\textsf{C} = {(\textsf{C}^{\text{op}}/c)}^{\text{op}}
+    \end{align*}
+  \item The singleton set is the product of an empty colleciton of sets in $\Set$
+  \item The empty set is the coproduct of an empty collection of sets in $\Set$.
+  \item We can define the notions of epimorphisms vs monomorphisms. Then the monomorphisms are precisely the epimorphisms in the opposite category.
+  \item[(h$^{\ast}$)] \textbf{TODO:}
+
+    \setcounter{enumi}{8}
+  \item The dual defines a contravariant functor ${(-)}^{\ast}\Vect_{\R} \to \Vect_{\R}$.
+    If $F: V \to W$ is a linear map, then how do we have to define $F^{\ast}: W^{\ast} \to  V^{\ast}$?
+  \item This is the twisted arrow category of $(\R,\leq)$. See week 06 exercise class notes.
+  \item The tensor product defines a functor $\Vect_\R \times \Vect_{\R} \to \Vect_{\R}$. Unpack the condition of functoriality and that of the product category.
+\end{enumerate}
+
+
+\subsection{Definitions of the above}
+You should have the definitions of the concepts form category theory in the book. I 
+
+
+
+Recall that for a category $\textsf{C}$, we can define its \textbf{opposite category} $\textsf{C}^{\text{op}}$ where
+\begin{itemize}
+  \item $\text{Ob}(\textsf{C}^{\text{op}}) := \text{Ob}(\textsf{C})$.
+  \item $\Hom_{\textsf{C}^{\text{op}}}(X,Y) := \Hom_{\textsf{C}}(Y,X)$
+  \item For $f \in \Hom_{\textsf{C}^{\text{op}}}(X,Y)$, $g \in \Hom_{\textsf{C}^{\text{op}}(Y,Z)}$ define their composition
+    \begin{align*}
+      f;_{\textsf{C}^{\text{op}}}g := g;_{\textsf{C}}f \in \Hom_{\textsf{C}^{\text{op}}}(X,Z) = \Hom_{\textsf{C}}(Z,X)
+    \end{align*}
+\end{itemize}
+
+
+%\subsection{Q\&A}

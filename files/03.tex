@@ -1,0 +1,236 @@
+\section{Week 03}
+Quick administrative information:
+You have a $7$ day late-policy when submitting theory exercises. So if your submissions are in total late by 7 days, you still get a correction and all the points you have achieve.
+
+For example, you submit Homework sheet 1 late by 2 days and Homework sheet 3 late by 5 days, you still get all the points there. If you then submit Homework sheet 7 late, you will get a penalty on that sheet.
+
+
+\subsection{Theory Section}
+We will warm up again the notions of magmas, semi-groups, monoids and groups.
+
+Consider the set $G = \{\overline{1},\overline{2},\overline{3},\overline{4}\}$ with
+\begin{align*}
+  \overline{a}\texttt{;} \overline{b} := \overline{a \cdot b} \mod 5
+\end{align*}
+For example, $\overline{3} \texttt{;} \overline{4} = \overline{12} \equiv \overline{2}$.
+
+\begin{enumerate}
+  \item Is it a magma? If so, write down its multiplication table.
+
+    \textbf{Answer:}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{L|LLLL}
+      \texttt{;} & \overline{1} & \overline{2} & \overline{3} & \overline{4}\\
+      \midrule
+      \overline{1} & \overline{1} & \overline{2} & \overline{3} & \overline{4}\\
+      \overline{2} & \overline{2} & \overline{4} & \overline{1} & \overline{3}\\
+      \overline{3} & \overline{3} & \overline{1} & \overline{4} & \overline{2}\\
+      \overline{4} & \overline{4} & \overline{3} & \overline{2} & \overline{1}
+    \end{tabular}
+    \caption{The multiplication table for $G$. It is a magma, because for all $\overline{a},\overline{b} \in G$, $\overline{a} \texttt{;} \overline{b}$ is an element of $G$.}
+    \end{table}
+  \item Is it a semi-group? 
+
+    \textbf{Answer:}
+    Yes, it is associative, because multiplication in $\Z$ is\footnote{It is a bit more complicated than that. One has to first define what it means to write for two number to be equal \emph{modulo} a number. In the interest of time that is not done here.}.
+  \item Is it a monoid? If so, what is the neutral element?
+
+    It is a monoid because $\overline{1}$ is the neutral element.
+  \item Is it a group?
+
+    \textbf{Answer:}
+    Yes. We have the following table of inverses
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{L|LLLL}
+      \overline{a}& \overline{1} & \overline{2} & \overline{3} & \overline{4}
+      \\
+      \midrule
+      \overline{a}^{-1}&\overline{1} & \overline{3} & \overline{2} & \overline{4}
+    \end{tabular}
+    \caption{The table of inverses for $G$}
+    \end{table}
+\end{enumerate}
+
+
+\subsubsection{Morphisms}
+Let $(G,\texttt{;}_G,e_G)$ and $(H,\texttt{;}_H,e_H)$ be groups.
+Recall that a morphism of groups from $G$ to $H$ is a function $f: G \to H$ such that
+\begin{align}
+  \label{eq:group-hom}
+  \forall a,b \in G\colon \quad
+  f(a \texttt{;}b) = f(a) \texttt{;} f(b)
+\end{align}
+
+
+Now, consider the group $H = \{0,1,2,3,4\}$ with addition modulo $4$. (Verify that this is indeed a group).
+\begin{enumerate}
+  \setcounter{enumi}{4}
+  \item Find a morphism of groups $\phi: H \to G$ such that $\phi(1) = \overline{2}$.
+
+    \textbf{Answer:}
+    We write $\cdot$ for the multiplication $\texttt{;}_G$ in $G$ and we write $+$ for the addition $\texttt{;}_H$ in $H$. If we want $\phi$ to be a morphism of groups, it must hold 
+    \begin{align*}
+      \forall a,b\in H\colon \quad
+      \phi(a+b) = \phi(a \texttt{;}_H b) = 
+      \phi(a) \texttt{;}_G \phi(b)
+      =
+      \phi(a) \cdot \phi(b)
+    \end{align*}
+    So for $a = b =1$, we have
+    \begin{align*}
+      \phi(2) = \phi(1 + 1) = \phi(1) \cdot \phi(1) = \overline{2} \cdot \overline{2} = \overline{4}
+    \end{align*}
+    and for $a = 1, b = 2$
+    \begin{align*}
+      \phi(3) = \phi(1 + 2) = \phi(1) \cdot \phi(2) = \overline{2} \cdot \overline{4} = \overline{3}
+    \end{align*}
+
+    We also know that any morphism of groups preserved the identity element, so
+    \begin{align*}
+      \phi(0) =\phi(e_H) = e_G = \overline{1}
+    \end{align*}
+
+    It remains to check Equation~\eqref{eq:group-hom}. In the interest of time, I leave that up to you.
+
+  \item Is it an isomorphism? 
+
+    \textbf{Answer:}
+    Yes, because it is bijective.
+
+  \item For any $n \in \N$, the \textbf{determinant}
+    \begin{align*}
+      \det: \GL(n,\R) \to (\R^{\times}, \cdot)
+    \end{align*}
+    is a group homomorphism, since $\det(AB) = \det(A) \cdot \det(A)$
+  \item Is $\trace: \GL(n,\R) \to (\R^{\times},\cdot)$ a group homomorphism?
+
+    \textbf{Answer:} No. But $\trace: \Mat(n \times n,\R) \to (\R,+)$ is.
+
+  \item The exponential map 
+    \begin{align*}
+      e^{\square}: (\R,+) \to (\R_{>0},\cdot), \quad
+      e^{x} := \sum_{k=0}^{\infty} \frac{1}{k!} x^{k}
+    \end{align*}
+    is a group homomorphism, because $e^{x + y} = e^{x} \cdot e^{y}$.
+    \begin{align*}
+      e^{x+y}
+      &=
+      \sum_{k=0}^{\infty} \frac{1}{k!} {(x+y)}^{k}
+      \\
+      &=
+      \sum_{k=0}^{\infty} \frac{1}{k!} \sum_{j=0}^{k} \binom{k}{j}x^{j}y^{k-j}
+      \\
+      &=
+      \sum_{k=0}^{\infty} \frac{1}{k!} \sum_{j=0}^{k} \frac{k!}{j!(k-j)!}x^{j}y^{k-j}
+      \\
+      &=
+      \sum_{k=0}^{\infty} \sum_{j=0}^{k}\frac{x^j}{j!}\frac{y^{k-j}}{(k-j)!}
+      \\
+      &= 
+      \sum_{k=0}^{\infty} \frac{x^{k}}{k!} \sum_{j=0}^{\infty}\frac{y^{j}}{j!}
+      \\
+      &=
+      e^{x} \cdot e^{y}
+    \end{align*}
+
+    For a square matrix $A \in \Mat(n \times n,\R)$, define the exponential map
+    \begin{align*}
+      \exp: \Mat(n \times n,\R) \to \GL(n,\R)
+      ,
+      \quad
+      \exp(A) := \sum_{k=0}^{\infty}\frac{1}{k!}A^{k}
+    \end{align*}
+    Is $\exp$ a group homomorphism? Check with a computer.
+    You may want to use the \texttt{numpy.matmul} and \texttt{scipy.linalg.expm} functions.
+
+    \textbf{Answer:} No. That is because generally, matrices do not commute, so in the binomial expansion for $k = 2$ one might have
+    \begin{align*}
+      {(A+B)}^{2} = A^{2} + AB + BA + B^{2} \neq A^{2} + 2AB + B^{2}
+    \end{align*}
+    More concretely, for $A = \begin{pmatrix}
+    1 & 0\\
+    0& 3
+    \end{pmatrix}$ and $B = \begin{pmatrix}
+    0 & 1\\
+    -1 & 0
+    \end{pmatrix}$ we have
+    \vspace{1\baselineskip} 
+    \begin{python}
+>>> import numpy as np
+>>> A = np.mat('[1,0;0,3]')
+>>> B = np.mat('[0,1;-1,0]')
+>>> import scipy.linalg as la
+>>> eA = la.expm(A)
+>>> eB = la.expm(B)
+>>> np.matmul(eA,eB)
+array([[  1.46869394,   2.28735529],
+       [-16.90139654,  10.85226191]])
+>>> la.expm(A + B)
+array([[ 0.       ,  7.3890561],
+       [-7.3890561, 14.7781122]])
+    \end{python}
+  \item Consider the compositions
+    \begin{align*}
+      \trace \texttt{;} e^{\square}: &\Mat(n \times n,\R) \to \R
+      \\
+      \exp \texttt{;} \det: &\Mat(n \times n,\R) \to \R
+    \end{align*}
+    One can show that the diagram commutes
+    \begin{center}
+    \begin{tikzcd}[ ] 
+      \Mat(n \times{} n,\R)
+      \arrow[]{r}{\trace}
+      \arrow[swap]{d}{\exp}
+      &
+      \R
+      \arrow[]{d}{e^{\square}}
+      \\
+      \GL(n,\R)
+      \arrow[]{r}{\det}
+      &
+      \R
+    \end{tikzcd}
+    \end{center}
+    Check this with a computer by checking some matrices.
+\end{enumerate}
+
+
+\subsection{Exercise Sheet Discussion}
+The theory section covers quite a few things on the exercise sheet, namely exerises 2.1, 2.3, 2.4. 
+
+Nevertheless, if you have any questions, feel free to ask them in class or via email to \href{mailto:kimha@ethz.ch}{kimha@ethz.ch}
+
+\subsubsection{\texttt{UniqueNeutralMonoid} [3 Points]}
+The exercise asks you to prove that the neutral element of a monoid is uniquely determined.
+Since this exercise is \emph{very} short, we only give the first few words of the proof.
+
+%Let $(S,\texttt{;})$ be a semigroup and let $1 \in S, 1' \in S$ such that $(S,\texttt{;},1)$ and $(S,\texttt{;},1')$ are monoids.
+
+Because $1'$ is the neutral element of $(S,\texttt{;},1')$ we have that for any $a \in S$:
+$a \texttt{;}1' = a$.
+In particular, for \ldots
+
+\subsubsection{\texttt{GroupWithThreeElements} [3 Points]}
+We have seen that the exponential map $e^{\square}: (\C,+) \to (\C^{\times},\cdot)$ is a group homomorphism, so
+\begin{align*}
+  e^{i \phi} \cdot e^{i \theta} = e^{i \phi + i \theta} = e^{i(\phi + \theta)}
+\end{align*}
+You may use without proof that $e^{2 \pi i} = 1$
+
+\subsubsection{\texttt{TraceAndDeterminant} [8 Points]}
+This exercise may look long, but each of its 8 questions are very short.
+
+
+\subsubsection{\texttt{MorphismMonoidIsomorphism} [6 Points]}
+You may use without proof\footnote{Check the ACT4E book for reference.} that a function $f: M \to N$ is bijective, if and only if there exists a function $g: N \to M$ such that $f \texttt{;}g = \id_M$ and $g \texttt{;}f = \id_N$.
+
+For the ``if'' part, you need to show that the inverse function $g$ is also a morphism of monoids, i.e.\ that 
+\begin{align*}
+  \forall a,b \in N \colon \quad
+  g(a \texttt{;}_N b) = g(a) \texttt{;}_M g(b)
+\end{align*}
+You may want to introduce the elements $a' := g(a), b':= g(b)$.
+
+The ``only if'' part should be easier.

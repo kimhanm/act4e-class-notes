@@ -1,0 +1,247 @@
+\usepackage{lmodern}
+\usepackage{fontenc}[t1]
+\usepackage{microtype}
+\usepackage{caption}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{xifthen}
+\usepackage{booktabs} % nicer tabular lines
+\usepackage{spreadtab} % spreadsheet functionality
+\usepackage{ltablex} % big table
+
+\usepackage{array}   
+\newcolumntype{L}{>{$}l<{$}} 
+\newcolumntype{C}{>{$}c<{$}} 
+\newcolumntype{R}{>{$}r<{$}} 
+
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage[customcolors,norndcorners]{hf-tikz}
+
+
+% code listings
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+morekeywords={self},              % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false
+}}
+\usepackage{subcaption}
+\DeclareCaptionFormat{custom}
+{%
+  %\textbf{#1#2}
+  {\small #3}
+}
+\captionsetup{format=custom}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+  \pagestyle{fancy}
+  \fancyhf{}
+  \hoffset = -0.45 in
+  \voffset = -0.3 in
+  \textwidth = 500pt
+  \textheight = 650pt
+  \setlength{\headheight}{25.6pt}
+  \setlength{\headwidth}{500pt}
+  %\setlength{\parindent}{0pt}
+  \setcounter{secnumdepth}{0}
+  \marginparwidth = 0pt
+  \fancyhead[L]{\leftmark}
+  \fancyhead[R]{\rightmark}
+  \fancyfoot[C]{\thepage}
+\usepackage{amsmath}
+\usepackage{amssymb} 
+\usepackage{amsthm} 
+\usepackage{dsfont}
+\usepackage{amsfonts}
+\usepackage{mathdots}
+\usepackage{mathrsfs}
+\usepackage{bm} % bold math
+\usepackage{mathtools}
+\usepackage{faktor} % Quotients
+\usepackage{xcolor}
+\usepackage{stmaryrd}
+\usepackage{prftree} % proof tree
+
+\let\tmpphi\phi 
+\let\phi\varphi
+\let\varphi\tmpphi 
+\usepackage{graphicx}
+\usepackage[all]{xy} % xypic
+  \SelectTips{cm}{}
+  \SilentMatrices
+
+\usepackage{tikz}
+  \pgfdeclarelayer{edgelayer}
+  \pgfdeclarelayer{nodelayer}
+  \pgfsetlayers{edgelayer,nodelayer}
+  \usetikzlibrary{cd,shapes,decorations,arrows,calc,arrows.meta,fit,positioning,fit}
+  %\usetikzlibrary{arrows.meta}
+
+\usepackage{sectsty}
+    \sectionfont{\LARGE}
+    \subsectionfont{\Large}
+    \subsubsectionfont{\large}
+    \paragraphfont{\large}
+
+\usepackage[export]{adjustbox}  %\adjustbox{scale=2,center}{}, export allows vertical alignment in includegraphics
+\usepackage{paracol}
+\usepackage{float}
+\usepackage{xcolor}
+\definecolor{myblue}{HTML}{81a1c1}
+\definecolor{mygreen}{HTML}{a3be8c}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\IS}{\mathbb{S}}
+\newcommand{\ID}{\mathbb{D}}
+\newcommand{\IT}{\mathbb{T}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\IP}{\mathbb{P}}
+\newcommand{\RP}{\mathbb{RP}}
+\newcommand{\from}{\leftarrow}
+
+
+\DeclareMathOperator{\charac}{char}
+\DeclareMathOperator{\degree}{deg}  
+
+\newcommand{\del}{\partial}
+\newcommand{\es}{\text{\o}}
+\newcommand{\rep}{rel.\ endpoints}
+\DeclarePairedDelimiter\abs{\vert}{\vert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\Norm{\vert\vert}{\vert\vert}
+\DeclarePairedDelimiter\scal{\langle}{\rangle}
+\DeclarePairedDelimiter\dbrack{\llbracket}{\rrbracket}
+% LinAlg
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Image}{Im}
+\DeclareMathOperator{\image}{im}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\coev}{coev}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\GL}{GL}
+
+% Algebra
+\DeclareMathOperator{\lcd}{lcd}
+\DeclareMathOperator{\ggT}{ggT}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\sgn}{sgn}
+
+% Topology
+\DeclareMathOperator{\const}{const}
+\DeclareMathOperator{\Deck}{Deck}
+
+% Category
+\newcommand*{\Top}{\text{\sffamily Top}}
+\newcommand*{\Htpy}{\text{\sffamily Htpy}}
+\newcommand*{\Grp}{\text{\sffamily Grp}}
+\newcommand*{\Set}{\text{\sffamily Set}}
+\newcommand*{\Vect}{\text{\sffamily Vect}}
+\newcommand*{\Rel}{\text{\sffamily Rel}}
+\newcommand*{\Ring}{\text{\sffamily Ring}}
+
+\newcommand{\iso}{\cong}
+\newcommand{\mono}{\rightarrowtail}
+\newcommand{\epi}{\twoheadrightarrow}
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\usepackage{comment}
+\ifnum\showsolutions=1
+  \newenvironment{sol}{\textbf{Solution:}~}{}
+\else
+  \excludecomment{sol}
+\fi
+\newcounter{theo}[subsection]
+\newcounter{exer}[section]
+\renewcommand{\thetheo}{\arabic{section}.\arabic{subsection}.\arabic{theo}}
+\renewcommand{\theexer}{\arabic{section}.\arabic{exer}}
+
+\newcommand{\defboxenv}[5]{
+  \newenvironment{#1}[1][]{
+    \refstepcounter{#4}
+    \ifstrempty{##1} { % no Title
+      \mdfsetup{
+        frametitle={
+          \tikz[baseline=(current bounding box.east), outer sep=0pt]
+          \node[anchor=east,rectangle,fill=#3]
+          {\strut #2~#5};
+        }
+      }
+    }{ % else: with Title
+      \mdfsetup{
+        frametitle={
+          \tikz[baseline=(current bounding box.east),outer sep=0pt]
+          \node[anchor=east,rectangle,fill=#3]
+          {\strut #2~#5:~##1};
+        }
+      }
+    } % either case
+    \mdfsetup{
+      linecolor=#3,
+      innertopmargin=0pt,
+      linewidth=2pt,
+      topline=true,
+      frametitleaboveskip=\dimexpr-\ht\strutbox\relax,
+    }
+    \begin{mdframed}[]\relax
+    }{ % post env command
+    \end{mdframed}
+  }
+}
+\defboxenv{dfn}{Definition}{orange!50}{theo}{\thetheo}
+\defboxenv{edfn}{(Definition)}{orange!20}{theo}{\thetheo}
+\defboxenv{thm}{Theorem}{blue!40}{theo}{\thetheo}
+\defboxenv{lem}{Lemma}{blue!20}{theo}{\thetheo}
+\defboxenv{prop}{Proposition}{myblue}{theo}{\thetheo}
+\defboxenv{cor}{Corollary}{blue!30}{theo}{\thetheo}
+\defboxenv{xmp}{Example}{green!50!blue!30!white}{theo}{\thetheo}
+\defboxenv{rem}{Remark}{red!20}{theo}{\thetheo}
+\defboxenv{exr}{Exercise}{black!30!white}{exer}{\theexer}
+
+% ACT4E
+\newcommand\lList{\scalebox{0.3}[1.2]{$\lhd$}}
+\newcommand\rList{\scalebox{0.3}[1.2]{$\rhd$}}
+\newcommand\asList[1]{\lList #1\rList}
+\newcommand\SetL{\asList{\textsf{Set}}}

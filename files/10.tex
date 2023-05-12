@@ -1,0 +1,117 @@
+\section{Week 10}
+Informally, a design problem is one where you want to find all viable solutions that optimize \textbf{functionality} and minimize \textbf{requirements}.
+
+\subsection{Design Problems}
+
+
+To model this mathematically, we give the following definition
+A \textbf{design problem} is a tuple $\scal{F,R,d}$, where $F,R$ are posets and $d$ is a monotone map of the form
+\begin{align*}
+  d: F^{\text{op}} \times R \to_{\text{Pos}} \texttt{Bool}
+\end{align*}
+\begin{itemize}
+  \item The poset $F^{\text{op}}$ describes the possible modes of functionality. In the example of a drone, one could have $F = (\R_{>0},\leq) \times (\R_{>0},\leq)$ describe its top speed and range.
+  \item The poset $R$ describes the requirements. For example one could use $R = (\R_{> 0},\leq)$ to describe its cost.
+  \item For $d$ to be monotonous, we require that for $(f,r),(f',r') \in F^{\text{op}} \times R$:
+    \begin{align*}
+      f \geq f' \land r \leq r' \implies d(f,r) \leq d(f',r')
+    \end{align*}
+    so if a drone $x$ provides higher functionality $f$ at a lower cost $r$, than another drone $x'$, we prefer drone $x$ over $x'$.
+\end{itemize}
+
+In the exercise sheet, you will show that any monotone map $g: F \to_{\text{Pos}} R$ induces a design problem where $d_g(f^{\ast},r) = \top$ if and only if $g(f) \leq r$.
+
+In the case of drones as above, one would have a selection of drones $X$. If a drone $x$ provides functionality $f(x)$ and costs $c(x)$, we define $g(f) = \min_{x, f(x) \geq f} c(x)$
+
+
+\subsection{Upper Sets}
+Given a poset $(P,\leq)$, an \textbf{upper set} of $P$ is a subset $X \subseteq P$ such that
+\begin{align*}
+  x \in X \land y \geq x \implies y \in X
+\end{align*}
+Write $\mathcal{U}(P)$ to be the set of upper sets of $P$.
+There is a function
+\begin{align*}
+  \uparrow: \texttt{Pow}(P) \to \mathcal{U}(P),
+  \quad
+  A \mapsto \uparrow(A)
+\end{align*}
+that returns the smallest upper set containing $A$ (ordered by inclusion).
+
+\textbf{Exercise:} Let $X = {([0,1],\leq)}^{2}$. Draw $\uparrow(A)$ for
+\begin{itemize}
+  \item $A = \{(\tfrac{1}{2},\tfrac{1}{2})\}$
+  \item $A = \{(\tfrac{1}{4},\tfrac{3}{4}),(\tfrac{3}{4},\tfrac{1}{4})\}$
+  \item $A = \{(y,x) \big\vert x + y = 1\}$
+  \item $A = \{(y,x) \big\vert x^{2} + y^{2} = 1\}$
+\end{itemize}
+
+\subsubsection{The category $\textsf{UPos}$}
+
+We can form a category $\textsf{UPos}$ where
+\begin{enumerate}
+  \item The objects are posets
+  \item A morphism from objects $X,Y$ is a monotone map
+    \begin{align*}
+      f: X \to  \mathcal{U}(Y)
+    \end{align*}
+  \item Given morphisms $f: X \to Y$, $g: Y \to Z$, we define their composition as monotone map
+    \begin{align*}
+      (f;g): X \to \mathcal{U}(Z)
+      ,\quad
+      x \mapsto \bigcup_{y \in f(x)} g(y)
+    \end{align*}
+  \item The identity morphism is the upper closure operator $\id_X(x) = \uparrow \{x\}$.
+\end{enumerate}
+As an exercise, show that this does indeed form a category.
+
+\textbf{$\bm{(f;g)}$ is well-defined:} 
+We have to show that for all $x \in X$, $(f;g)(x)$ is an upper set of $Z$.
+Let $x \in X$ and let $z \in (f;g)(x)$ and $z' \geq z$. By definition of $(f;g)$, there exists a $y \in f(x)$ such that $z \in g(y)$.
+Since the target of $g$ is $\mathcal{U}(Z)$, $g(y)$ is an upper set. Which means $z' \in g(y) \subseteq (f;g)(x)$.
+
+\textbf{$\bm{f;g}$ is monotone:} Let $x,x' \in X$ such that $x \leq x'$.
+We need to show that $(f;g)(x) \subseteq (f;g)(x')$.
+Since $f$ is monotone, it holds $f(x) \subseteq f(x')$, thus 
+\begin{align*}
+  (f;g)(x) =
+  \bigcup_{y \in f(x)} g(y) \subseteq \bigcup_{y \in f(x')} g(y)
+  = (f;g)(x')
+\end{align*}
+
+Note that if we defined the composition through
+\begin{align*}
+  (f;g): X \to \mathcal{U}(Z),
+  \quad
+  x \mapsto \bigcap_{y \in f(x)} g(y)
+\end{align*}
+then this alternative composition is no longer monotone.
+
+
+\textbf{Associativity of composition:} Let $f: X \to \mathcal{U}(Y), g: Y \to \mathcal{U}(Z), h: Z \to \mathcal{U}(W)$ be monotone maps. Then for all $x \in X$ it holds
+\begin{align*}
+  ((f;g);h)(x) 
+  &=
+  \bigcup_{z \in (f;g)(x)} h(z)
+  \\
+  &= \bigcup_{y \in f(x)}
+  \bigcup_{z \in g(y)}
+  h(z)
+  \\
+  &=
+  \bigcup_{y \in f(x)}
+  (g;h)(y)
+  \\
+  &=
+  \bigcup_{y \in f(x)}
+  (g;h)(y)
+  \\
+  &=(f;(g;h))(x)
+\end{align*}
+
+\textbf{Identity morphism:} Let $f: X \to \mathcal{U}(Y)$ be a monotone map. Then
+\begin{align*}
+  (\id_Y;f)(x) = \bigcup_{y \in f(x)} \uparrow\{y\} \supseteq f(x)
+\end{align*}
+Since $f(x)$ is an upper set of $y$, any $y' \in \uparrow\{y\}$ is also an element of $f(x)$.
+Likewise one shows $f;\id_X = f$.

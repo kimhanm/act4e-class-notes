@@ -1,0 +1,353 @@
+\section{Week 06}
+On the Week 03 exercises, I had the wrong number of exercises listed in the exercise class notes. The exercise \texttt{ProductPoset} was not published, so the max number of points for that week is 18 instead of 23.
+
+\subsection{Commutative Diagrams}
+Some mathematical statements take a lot words to write down.
+Commutative diagrams let us organize and condense that information in a neat way.
+
+A \textbf{triangle diagram} in a category $\textsf{C}$ consists of three objects $X,Y,Z$ and three morphisms $f,g,h$ in the form
+\begin{center}
+\begin{tikzcd}[column sep=0.8em] 
+  &Y \arrow[]{dr}{g}
+  \\
+  X
+  \arrow[]{ur}{f}
+  \arrow[]{rr}{h}
+  &&
+  Z
+\end{tikzcd}
+\end{center}
+The triangle diagram \textbf{commutes}, if $f;g = h$.
+
+A (general) \textbf{diagram} in $\textsf{C}$ is any collection of objects and morphisms between them.
+A diagram \textbf{commutes}, if all of its induced triangles commute.
+
+\textbf{Note:} Triangles need not be triangular.
+For example, in this diagram
+\begin{center}
+\begin{tikzcd}[] 
+  A 
+  \arrow[]{r}{f}
+  \arrow[]{d}{\alpha}
+  & B 
+  \arrow[]{r}{g}
+  \arrow[]{d}{\beta}
+  & C
+  \arrow[]{d}{\gamma}
+  \\
+  X 
+  \arrow[]{r}{p}
+  & Y 
+  \arrow[]{r}{q}
+  & Z
+\end{tikzcd}
+\end{center}
+There are no triangular triangles, but since we ca compose morphisms, the following forms a triangle:
+\begin{center}
+\begin{tikzcd}[ ] 
+  A 
+  \arrow[]{rr}{f;g}
+  \arrow[]{drr}{\alpha;p;q}
+  & &
+  \arrow[]{d}{\gamma}
+  C
+  \\
+  & & Z
+\end{tikzcd}
+\end{center}
+so on order for the entire diagram to commute, this triangle must commute, which means $f;g;\gamma = \alpha;p;q$.
+
+\textbf{Warning:} Don't forget the identity morphism. For example
+\begin{align*}
+  \xymatrix{
+    X
+    \ar@/^2ex/[r]^{f}
+    &
+    Y
+    \ar@/^2ex/[l]^{g}
+  }
+\quad \text{should be thought of as} \quad
+  \xymatrix{
+    X
+    \ar@(dl,ul)[]^{\id_X}
+    \ar@/^2ex/[r]^{f}
+    &
+    Y
+    \ar@/^2ex/[l]^{g}
+    \ar@(ur,dr)[]^{\id_Y}
+  }
+\end{align*}
+Which includes two important triangles
+\begin{center}
+\begin{tikzcd}[column sep=0.8em] 
+  &Y
+  \arrow[]{dr}{g}
+  \\
+  X
+  \arrow[]{ur}{f}
+  \arrow[]{rr}{\id_X}
+  &&X
+\end{tikzcd}
+\quad \text{and} \quad 
+\begin{tikzcd}[column sep=0.8em] 
+  &X
+  \arrow[]{dr}{f}
+  \\
+  Y
+  \arrow[]{ur}{g}
+  \arrow[]{rr}{\id_Y}
+  &&Y
+\end{tikzcd}
+\end{center}
+
+
+
+
+To give an example of how much space this saves, draw the commutative diagram for the statement
+\begin{center}
+  Let $T,L,A_1,\ldots,A_5$ be objects and $\psi: T \to L, g_i: T \to A_i, f_i: L \to A_i$ for $i = 1,\ldots,5$ and $a_i: A_i \to A_{i+1}$ for $i = 1,\ldots 4$ 
+  morphisms such that 
+  $\psi;f_i = g_i$ for $i = 1,\ldots, 5$ and 
+  \begin{align}
+  \psi;f_i = g_i \quad \text{and} \quad 
+  i = 1,\ldots, 5,
+  \quad \text{and} \quad 
+  g_i;a_i = g_{i+1}
+  ,\quad
+  f_i;a_i = f_{i+1}
+  \quad \text{for} \quad 
+  i = 1,\ldots, 4
+  \label{eq:conditions}
+  \end{align}
+\end{center}
+
+\textbf{Solution:}
+\begin{align*}
+  \xymatrix{
+    &&
+    T
+    \ar[d]|{\psi}
+    \ar[ddll]|{g_1}
+    \ar[ddl]|{g_2}
+    \ar@/^2ex/[dd]|{g_3}
+    \ar[ddr]|{g_4}
+    \ar[ddrr]|{g_5}
+    \\
+    &&
+    L
+    \ar[dll]|{f_1}
+    \ar[dl]|{f_2}
+    \ar[d]|{f_3}
+    \ar[dr]|{f_4}
+    \ar[drr]|{f_5}
+    \\
+    A_1
+    \ar[r]|{a_1}
+    &
+    A_2
+    \ar[r]|{a_2}
+    &
+    A_3
+    \ar[r]|{a_3}
+    &
+    A_4
+    \ar[r]|{a_4}
+    &
+    A_5
+  }
+\end{align*}
+Can you see all the triangles in this diagram?
+
+\textbf{Note:} If in a diagram, all triangles commute, then \emph{any two paths} in the diagram are the same.
+
+As an exercise, show using just Equations~\eqref{eq:conditions} that 
+\begin{align*}
+  g_5 = \psi;f_1;a_1;a_2;a_3;a_4
+\end{align*}
+
+\textbf{Solution:}
+\begin{align*}
+  g_5 = \psi;f_5 = \psi;f_4;a_4 = \psi;f_3;a_3;a_4
+  = \psi;f_2;a_2;a_3;a_4
+  = \psi;f_1;a_1;a_2;a_3;a_4
+\end{align*}
+
+Fun fact: This particular diagram (or rather, a generalization of it) is used in algebra.
+If we write $\Z/n\Z = \{0,1,\ldots,n-1\}$, then the \emph{$10$-adic integers} $\Z_{10}$ can represent ``numbers'' like $\cdots 111111$ or $\cdots99999 = -1$.
+
+for the exercise \texttt{InventingCommDiagrams}, I suggest that you keep the diagrams small, so do not go bigger than the example given.
+
+\subsection{Categorical Constructions}
+\subsubsection{Slice Categories}
+If $\textsf{C}$ is a category and $c \in \text{Ob}(\textsf{C})$.
+Then the \textbf{slice category} of $c$ \textbf{over} $\textsf{C}$ is the category $\textsf{C}/c$, where
+\begin{enumerate}
+  \item The objects are morphisms $x \to c$ in $\textsf{C}$
+  \item A morphism of between the objects $(x \stackrel{f}{\to}c)$ and $(y \stackrel{g}{\to}c)$ is a morphism $x \stackrel{\phi}{\to} y$ such that the following diagram commutes:
+    \begin{center}
+    \begin{tikzcd}[column sep=0.8em] 
+      x \arrow[]{rr}{\phi} 
+      \arrow[swap]{dr}{f}
+      && y
+      \arrow[]{dl}{g}
+      \\
+      & c 
+    \end{tikzcd}
+    \end{center}
+  \item The composition of morphisms
+    \begin{center}
+    \begin{tikzcd}[column sep=0.8em] 
+      x \arrow[]{rr}{\phi} 
+      \arrow[swap]{dr}{f}
+      && y
+      \arrow[]{dl}{g}
+      \\
+      & c 
+    \end{tikzcd}
+    \begin{tikzcd}[column sep=0.8em] 
+      y \arrow[]{rr}{\psi} 
+      \arrow[swap]{dr}{g}
+      && z
+      \arrow[]{dl}{h}
+      \\
+      & c 
+    \end{tikzcd}
+    \end{center}
+    is the $\textsf{C}$-morphism $\phi;\psi$.
+
+    \textbf{In the exercise, you need to show that $\phi;\psi$ is a valid morphism in $\textsf{C}/c$.}
+\end{enumerate}
+
+
+Here is an example of a slice category:
+
+If $(P,\leq)$ is a poset, then the slice category $\mathcal{P}/a$ can be viewed as consisting of elements which are $\leq a$.
+The condition in the defintion (Point b) is always satisfied, because \emph{all} diagrams in $\mathcal{P}$ commute. Why?
+    
+For example, in the poset $(\N,\leq)$ the slice category $\mathcal{N}/5$ consists of numbers $\{0,1,2,3,4,5\}$. (We are \emph{slicing} off all numbers after $5$.)
+
+%Consider the category $\textsf{C}$ where the objects are 
+%\begin{align*}
+%  \underbrace{\emptyset}_{=: 0}
+%  , \quad
+%  \underbrace{\{x\}}_{=: 1}
+%  , \quad 
+%  \underbrace{\{x,y\}}_{=: 2}
+%  , \quad 
+%  \underbrace{\{x,y,z\}}_{=: 3}
+%\end{align*}
+%and the morphisms are functions
+%\begin{itemize}
+%  \item $\textsf{C}/0$ has one object, namely $(\emptyset \stackrel{\emptyset \times \emptyset}{\to} \emptyset)$. Why?
+%  \item $\textsf{C}/1$ looks exactly like $\textsf{C}$.
+%  \item To figure out $\textsf{C}/2$, let's look at its objects. We can identify a function $2 \to \{x,y\}$ as a sequence $xx,xy,yx,yy$ of length $2$. Likewise, we can identify a function $3 \to \{x,y\}$ as a sequence $xxx,xxxy,xyx,\ldots$ of length $3$.
+%    Thus, the objects of $\textsf{C}/2$ are
+%    \begin{align*}
+%      \_: 0 \to 2
+%      , \quad
+%      x,y: 1 \to 2
+%      , \quad
+%      xx,xy,yx,yy: 2 \to 2
+%      , \quad
+%      xxx,xxy,xyx,xyy,yxx,yxy,yyx,yyy: 3 \to 2
+%    \end{align*}
+%    Now, let's look at the Hom-sets $\Hom_{\textsf{C}/2}(a,b)$. We consider the cases in $a$:
+%    \textbf{$\bm{a = \_}$:} 
+%    $\Hom_{\textsf{C}/2}(\_,b)$ consists of functions with source $0$, of which there is exactly one.
+%    \begin{align*}
+%      \Hom_{\textsf{C}/2}(\_,b) = \{\ast\}
+%    \end{align*}
+%    \textbf{$\bm{a = x}$:} 
+%\end{itemize}
+
+
+\subsubsection{Twisted Arrow Categories}
+
+Consider the Poset $(\R,\leq)$. Our goal is to understand the twisted arrow category $\texttt{Tw }\mathcal{R}$.
+
+\begin{enumerate}
+  \item Its objects are morphisms $a \to b$ in the category $\mathcal{R}$, which are pairs of real numbers such that $a \leq b$.
+    Now, we identify the objects of $\texttt{Tw }\mathcal{R}$ with the closed intervals $[a,b] \subseteq \R$.
+  \item A morphism is then a diagram of the form
+    \begin{align*}
+      \xymatrix{
+        a
+        \ar[d]|{\leq}
+        &
+        c
+        \ar[l]|{\geq}
+        \ar[d]|{\leq}
+        \\
+        b
+        \ar[r]|{\leq}
+        &
+        d
+      }
+    \end{align*}
+    so we say that an interval $[a,b]$ has a morphism to an interval $[c,d]$ if and only if $c \leq a$ and $b \leq d$.
+    If you draw this on the real line, this precisely means that the interval $[a,b]$ is contained in $[c,d]$.
+  \item Thus, we can view the twisted arrow category $\texttt{Tw }\mathcal{R}$ as the poset of closed intervals ordered by inclusion.
+\end{enumerate}
+
+
+\subsubsection{The Categorical Product}
+In a category $\textsf{C}$, a \textbf{cone} over objects $A,B$ is an object $X$ of $\textsf{C}$ equipped with to morphisms
+
+\begin{center}
+\begin{tikzcd}[ ] 
+  A
+  &
+  X
+  \arrow[swap]{l}{f}
+  \arrow[]{r}{g}
+  &
+  B
+\end{tikzcd}
+\end{center}
+A cone $A \stackrel{\text{pr}_A}{\from} X \stackrel{\text{pr}_B}{\to} B$ is called \textbf{product} of $A,B$, if it is \emph{universal} in the sense that:
+
+For any other cone $A \stackrel{f}{\from}T \stackrel{g}{\to}B$, there exists a \emph{unique} morphism $\psi: T \to X$, such that the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}[] 
+  &T
+  \arrow[bend right,swap]{ddl}{f}
+  \arrow[bend left]{ddr}{g}
+  \arrow[dotted]{d}{\psi}
+  \\
+  &X
+  \arrow[]{dl}{\text{pr}_A}
+  \arrow[swap]{dr}{\text{pr}_B}
+  \\
+  A && B
+\end{tikzcd}
+\end{center}
+
+In the following, we will consider an example that illustrates the definition.
+
+
+Let $A = \{x,y\}$, $B = \{1,2\}$.
+Consider the sets 
+\begin{align*}
+S = \{(x,1),(x,2),(y,1)\}
+,\quad \text{and} \quad 
+R = \{(x,1),(x,2),(y,1),(y,2),r\}
+\end{align*}
+which are not isomorphic to $A \times B$. Which of the following is a reason why they can not be made into categorical product of $A$ and $B$?
+\begin{enumerate}
+  \item there do not exist $S$ morphisms $A\stackrel{\text{pr}_A}{\leftarrow}S \stackrel{\text{pr}_S}{\to}B$.
+  \item $S$ has morphisms $A \stackrel{\text{pr}_A}{\leftarrow} S \stackrel{\text{pr}_B}{\to} B$ but for another object $T$ with morphisms $A \stackrel{f}{\leftarrow} T \stackrel{g}{\to}B$, there does not exist a morphism $\phi_{f,g}: T \to S$ such that $f = \phi_{f,g};\text{pr}_A$ and $g = \phi_{f,g};\text{pr}_B$.
+  \item $R$ has morphisms $A \stackrel{\text{pr}_A}{\leftarrow} R \stackrel{\text{pr}_B}{\to} B$ but for another object $T$ with morphisms $A \stackrel{f}{\leftarrow} T \stackrel{g}{\to}B$, there does not exist a morphism $\phi_{f,g}: T \to S$ such that $f = \phi_{f,g};\text{pr}_A$ and $g = \phi_{f,g};\text{pr}_B$.
+  \item Don't know
+\end{enumerate}
+\textbf{Solution: (b)} 
+Consider the test-object $T = A \times B$ with $f,g$ the projection morphisms. Then $\phi_{f,g}$ cannot correctly map the element $(y,1)$ into $S$ correctly.
+
+$R$ however does have such a morphism $\phi_{f,g}: T \to R$, but it is not a product because $\phi_{f,g}$ is \textbf{not unique}!
+If for example $\text{pr}_A(r) = x, \text{pr}_B(r) = 1$, then one can chose for the cone $A \stackrel{f}{\from}A \times B \stackrel{g}{\to}B$ either $\phi_{f,g}(x,1) = (x,1)$ \textbf{or} $\phi_{f,g}(x,1) = r$.
+
+In the category $\Set$: If the cone has too few elements (like $S$), then such a morphism $\phi_{f,g}$ does not always exist.
+If the cone has too many elements (like $R$), then $\psi_{f,g}$ does exist, but is not unique.
+
+
+
